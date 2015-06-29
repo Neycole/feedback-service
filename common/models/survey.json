@@ -1,0 +1,88 @@
+{
+  "name": "survey",
+  "plural": "surveys",
+  "base": "PersistedModel",
+  "idInjection": false,
+  "strict": true,
+  "options": {
+    "validateUpsert": true,
+    "mongodb": {
+      "collection": "surveys"
+    }
+  },
+  "properties": {
+    "_id": {
+      "type": "string",
+      "generated": true,
+      "id": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "createdAt": {
+      "type": "date",
+      "required": false,
+      "defaultFn": "now"
+    },
+    "expires": {
+      "type": "boolean",
+      "required": true
+    },
+    "expiresAt": {
+      "type": "date",
+      "required": false
+    },
+    "questions": [
+      {
+        "_id": {
+          "type": "string",
+          "generated": true,
+          "id": true
+        },
+        "text": {
+          "type": "string",
+          "required": true
+        },
+        "order": {
+          "type": "integer",
+          "required": true
+        },
+        "type": {
+          "type": "string",
+          "required": true
+        },
+        "multiple": {
+          "type": "boolean",
+          "required": true
+        },
+        "answers": [
+          {
+            "_id": {
+              "type": "string",
+              "generated": true,
+              "id": true
+            },
+            "text": {
+              "type": "string",
+              "required": true
+            },
+            "order": {
+              "type": "integer",
+              "required": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "validations": [],
+  "relations": {
+    "user": {
+      "model": "User",
+      "type": "belongsTo"
+    }
+  },
+  "acls": [],
+  "methods": []
+}
