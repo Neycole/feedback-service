@@ -1,0 +1,26 @@
+<h1>Surveys</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+    </tr>
+    <tr>
+        <th>Author</th>
+    </tr>
+    <tr>
+        <th>Created</th>
+    </tr>
+    <tr>
+        <th>Expires</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="survey in surveys track by $index">
+        <td><a ng-href="#/surveys/edit/">{{ survey.name }}</a></td>
+        <td><span class="author"> {{ survey.user }}</span></td>
+        <td><span class="created">{{ survey.createdAt }}</span></td>
+        <td><span class="expires">{{ survey.expires ? survey.expiresAt : 'never' }}</span></td>
+    </tr>
+    </tbody>
+</table>
