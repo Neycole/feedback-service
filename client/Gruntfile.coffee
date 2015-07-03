@@ -53,6 +53,11 @@ module.exports = (grunt) ->
           }
         ]
 
+    compass:
+      dist:
+        options:
+          config: 'config/config.rb'
+
     useminPrepare:
       html: '<%= yeoman.dist %>/index.html'
       options:
@@ -77,6 +82,7 @@ module.exports = (grunt) ->
     'copy'
     'wiredep'
     'coffee'
+    'compass'
     'useminPrepare'
     'uglify'
     'usemin'
