@@ -29,3 +29,4 @@ node_modules
 client/.sass-cache
 client/bower_components
 client/node_modules
+/nbproject/
