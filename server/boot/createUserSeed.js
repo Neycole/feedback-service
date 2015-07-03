@@ -12,6 +12,8 @@ module.exports = function(app) {
         var Role = app.models.Role;
         var RoleMapping = app.models.RoleMapping;
         var Survey = app.models.Survey;
+        var moment = require('moment');
+        var surveysCreated = false;
 
         var users = [];
         var roles = [{
@@ -30,7 +32,7 @@ module.exports = function(app) {
         var surveys = [
             {
                 name: 'Satisfaction',
-                createdAt: '',
+                createdAt: moment().format('Y-M-d H:M:s'),
                 expires: false,
                 questions: [
                     {
@@ -81,19 +83,23 @@ module.exports = function(app) {
                                     }
                                     users.push(createdUser);
                                 });
+
+                                if (!surveysCreated) {
+                                    surveys.forEach(function (survey) {
+                                        survey.userId = createdUser.id;
+                                        Survey.findOrCreate(
+                                            {where: {name: survey.name}},
+                                            survey,
+                                            function (err, createdSurvey, created) {
+                                                console.log('created survey', createdSurvey.name);
+                                            }
+                                        );
+                                    });
+                                }
+                                surveysCreated = true;
                             });
                     });
                 });
-        });
-
-        surveys.forEach(function(survey) {
-            Survey.findOrCreate(
-                {where: {name: survey.name}},
-                survey,
-                function(err, createdSurvey, created) {
-
-                }
-            );
         });
         return users;
     }

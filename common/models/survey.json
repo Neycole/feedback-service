@@ -30,45 +30,48 @@
     },
     "questions": [
       {
-        "_id": {
-          "type": "string",
-          "generated": true,
-          "id": true
-        },
-        "text": {
-          "type": "string",
-          "required": true
-        },
-        "order": {
-          "type": "integer",
-          "required": true
-        },
-        "type": {
-          "type": "string",
-          "required": true
-        },
-        "multiple": {
-          "type": "boolean",
-          "required": false,
-          "default": false
-        },
-        "answers": [
-          {
-            "_id": {
-              "type": "string",
-              "generated": true,
-              "id": true
-            },
-            "text": {
-              "type": "string",
-              "required": true
-            },
-            "order": {
-              "type": "integer",
-              "required": true
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "generated": true,
+            "id": true
+          },
+          "text": {
+            "type": "string",
+            "required": true
+          },
+          "order": {
+            "type": "integer",
+            "required": true
+          },
+          "type": {
+            "type": "string",
+            "required": true
+          },
+          "multiple": {
+            "type": "boolean",
+            "required": false,
+            "default": false
+          },
+          "answers": [
+            {
+              "_id": {
+                "type": "string",
+                "generated": true,
+                "id": true
+              },
+              "text": {
+                "type": "string",
+                "required": true
+              },
+              "order": {
+                "type": "integer",
+                "required": true
+              }
             }
-          }
-        ]
+          ]
+        }
       }
     ]
   },
