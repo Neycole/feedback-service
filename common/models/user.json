@@ -15,6 +15,11 @@
       "model": "Role",
       "through": "RoleMapping",
       "foreignKey": "principalId"
+    },
+    "surveys": {
+      "type": "hasMany",
+      "model": "Survey",
+      "foreignKey": "surveyId"
     }
   },
   "acls": [

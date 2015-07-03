@@ -11,6 +11,7 @@ module.exports = function(app) {
         var User = app.models.User;
         var Role = app.models.Role;
         var RoleMapping = app.models.RoleMapping;
+        var Survey = app.models.Survey;
 
         var users = [];
         var roles = [{
@@ -26,6 +27,30 @@ module.exports = function(app) {
                 password: 'user'
             }]
         }];
+        var surveys = [
+            {
+                name: 'Satisfaction',
+                createdAt: '',
+                expires: false,
+                questions: [
+                    {
+                        text: 'Do you like this?',
+                        order: 0,
+                        type: 'choice',
+                        answers: [
+                            {
+                                text: 'Yes',
+                                order: 0
+                            },
+                            {
+                                text: 'No',
+                                order: 1
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
 
         roles.forEach(function(role) {
             Role.findOrCreate(
@@ -59,6 +84,16 @@ module.exports = function(app) {
                             });
                     });
                 });
+        });
+
+        surveys.forEach(function(survey) {
+            Survey.findOrCreate(
+                {where: {name: survey.name}},
+                survey,
+                function(err, createdSurvey, created) {
+
+                }
+            );
         });
         return users;
     }
