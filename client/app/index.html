@@ -7,7 +7,22 @@
 </head>
 <body ng-app="FeedbackServiceApp">
 
-    <div class="content-main" ui-view></div>
+    <aside >
+        <nav>
+            <ul class="side-nav" role="navigation" >
+                <li role="menuitem" ><a href="#/dashboard" >Dashboard</a ></li >
+                <li role="menuitem" ><a href="#/surveys" >Umfragen</a ></li >
+                <li role="menuitem" ><a href="#/new-survey" >neue Umfrage</a ></li >
+                <li role="menuitem" ><a href="#/profile" >Profil</a ></li >
+                <li role="menuitem" ><a href="#/logout" >Abmelden</a ></li >
+                <li role="menuitem" ><a href="#/user-bla" >Benutzer verwalten</a ></li >
+            </ul >
+        </nav >
+    </aside >
+
+    <main>
+        <div class="content-main container" ui-view></div>
+    </main>
 
     <footer>
         <!-- build:js vendor.min.js -->

@@ -1,4 +1,5 @@
 app = angular.module 'FeedbackServiceApp', [
+  'fs.module.dashboard'
   'fs.module.surveys'
 ]
 

@@ -9439,3 +9439,27 @@ th.hide-for-touch {
     display: none !important;
   }
 }
+/* line 3, ../../app/scss/app.scss */
+aside {
+  position: fixed;
+  width: 150px;
+  height: 100%;
+  background-color: #f2f2f2;
+  border-right: 1px solid #d8d8d8;
+}
+
+/* line 11, ../../app/scss/app.scss */
+nav li {
+  border-bottom: 1px solid #d8d8d8;
+}
+
+/* line 15, ../../app/scss/app.scss */
+main {
+  margin-left: 150px;
+  padding: 1rem 0;
+}
+
+/* line 20, ../../app/scss/app.scss */
+table {
+  width: 100%;
+}
