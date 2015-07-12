@@ -8,8 +8,17 @@ module = angular.module 'fs.module.surveys'
   * # EditSurveyController
   * Controller of the editsurvey index
 ###
-module.controller 'EditSurveyController', ($scope, SurveysService) ->
-  
-  SurveysService.get(123)
+module.controller 'EditSurveyController', ($scope, $state, SurveysService) ->
+ 
+  options = 
+    filter: 
+        include:
+            questions: 'answers'
+
+  SurveysService.get($state.params.id, options)
     .then (data) ->
         $scope.survey = data
+        console.log(data)
+
+    $scope.save = ->
+        Surveys.Service.update($scope.survey)

@@ -1,8 +1,9 @@
 'use strict';
 module = angular.module 'fs.module.surveys'
 
-module.service 'SurveysService', ($resource) ->
-    resource = $resource 'http://46.101.190.61:3001/api/surveys', {id: '@id'},
+module.service 'SurveysService', ($rootScope, $resource) ->
+    resource = $resource 'http://46.101.190.61:3001/api/users/:uid/surveys/:id',
+      {uid: $rootScope.userId, id: '@id', access_token: $rootScope.accessToken},
         create:
             method: 'POST'
         update:
@@ -11,7 +12,10 @@ module.service 'SurveysService', ($resource) ->
     service =
         list: ->
             resource.query().$promise
-        get: (id) ->
-            data = 
-                id: id
-            resource.get(data).$promise
+        get: (id, options = {}) ->
+            options.id = id
+            resource.get(options).$promise
+        update: (survey) ->
+            resource.update(survey).$promise
+        create: (survey) ->
+            resource.create(survey).$promise
