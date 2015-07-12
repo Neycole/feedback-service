@@ -13,3 +13,6 @@ module.controller 'NewSurveyController', ($scope, SurveysService) ->
     SurveysService.list()
     .then (data) ->
         $scope.surveys = data
+
+    $scope.save = ->
+        Surveys.Service.create($scope.survey)
