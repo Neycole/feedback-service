@@ -36,5 +36,17 @@
   "survey": {
     "dataSource": "mongodb",
     "public": true
+  },
+  "question": {
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "answer": {
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "chosenAnswer": {
+    "dataSource": "mongodb",
+    "public": true
   }
 }

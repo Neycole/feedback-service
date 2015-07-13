@@ -1,0 +1,33 @@
+{
+  "name": "answer",
+  "plural": "answers",
+  "base": "PersistedModel",
+  "strict": true,
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "mongodb": {
+      "collection": "answers"
+    }
+  },
+  "properties": {
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "order": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "question": {
+      "type": "belongsTo",
+      "model": "question",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": []
+}

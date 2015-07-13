@@ -8,51 +8,48 @@ module.exports = function(app) {
 
         console.log('Creating roles and users');
 
-        var User = app.models.User;
-        var Role = app.models.Role;
-        var RoleMapping = app.models.RoleMapping;
-        var Survey = app.models.Survey;
-        var moment = require('moment');
-        var surveysCreated = false;
-
-        var users = [];
-        var roles = [{
-            name: 'admin',
-            users: [{
-                email: 'j.doe@example.com',
-                password: 'notasecret'
-            }]
-        }, {
-            name: 'users',
-            users: [{
-                email: 'user@user.com',
-                password: 'user'
-            }]
-        }];
-        var surveys = [
-            {
-                name: 'Satisfaction',
-                createdAt: moment().format('Y-M-d H:M:s'),
-                expires: false,
-                questions: [
-                    {
-                        text: 'Do you like this?',
-                        order: 0,
-                        type: 'choice',
-                        answers: [
-                            {
-                                text: 'Yes',
-                                order: 0
-                            },
-                            {
-                                text: 'No',
-                                order: 1
-                            }
-                        ]
-                    }
-                ]
-            }
-        ];
+        var User = app.models.user,
+            Role = app.models.Role,
+            RoleMapping = app.models.RoleMapping,
+            Survey = app.models.Survey,
+            Question = app.models.Question,
+            Answer = app.models.Answer,
+            moment = require('moment'),
+            surveysCreated = false,
+            users = [],
+            roles = [{
+                name: 'admin',
+                users: [{
+                    email: 'j.doe@example.com',
+                    password: 'notasecret'
+                }]},
+                {
+                    name: 'users',
+                    users: [{
+                        email: 'user@user.com',
+                        password: 'user'
+                    }]
+                }],
+            surveys = [
+                {
+                    name: 'Satisfaction'
+                }
+            ],
+            question = {
+                text: 'Do you like this?',
+                order: 0,
+                type: 'choice'
+            },
+            answers = [
+                {
+                    text: 'Yes',
+                    order: 0
+                },
+                {
+                    text: 'No',
+                    order: 1
+                }
+            ];
 
         roles.forEach(function(role) {
             Role.findOrCreate(
@@ -85,6 +82,7 @@ module.exports = function(app) {
                                 });
 
                                 if (!surveysCreated) {
+                                    // create surveys
                                     surveys.forEach(function (survey) {
                                         survey.userId = createdUser.id;
                                         Survey.findOrCreate(
@@ -92,6 +90,28 @@ module.exports = function(app) {
                                             survey,
                                             function (err, createdSurvey, created) {
                                                 console.log('created survey', createdSurvey.name);
+
+                                                // Create question
+                                                question.surveyId = createdSurvey.id;
+                                                Question.findOrCreate(
+                                                    {where: {text: question.text}},
+                                                    question,
+                                                    function(err, createdQuestion, created) {
+                                                        console.log('created question', createdQuestion.text);
+
+                                                        // Create answer
+                                                        answers.forEach(function(answer) {
+                                                            answer.questionId = createdQuestion.id;
+                                                            Answer.findOrCreate(
+                                                                {where: {text: answer.text}},
+                                                                answer,
+                                                                function(err, createdAnswer, created) {
+                                                                    console.log('created answer', createdAnswer.text);
+                                                                }
+                                                            );
+                                                        });
+                                                    }
+                                                );
                                             }
                                         );
                                     });

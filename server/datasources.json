@@ -4,8 +4,8 @@
     "connector": "memory"
   },
   "mongodb": {
+    "database": "feedbackService",
     "name": "mongodb",
-    "connector": "mongodb",
-    "database": "feedbackService"
+    "connector": "mongodb"
   }
 }

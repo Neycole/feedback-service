@@ -1,0 +1,52 @@
+{
+  "name": "question",
+  "plural": "questions",
+  "base": "PersistedModel",
+  "strict": true,
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "mongodb": {
+      "collection": "questions"
+    }
+  },
+  "properties": {
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "order": {
+      "type": "number",
+      "required": true
+    },
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "multiple": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "answers": {
+      "type": "hasMany",
+      "model": "answer",
+      "foreignKey": ""
+    },
+    "survey": {
+      "type": "belongsTo",
+      "model": "survey",
+      "foreignKey": ""
+    },
+    "chosenAnswers": {
+      "type": "hasMany",
+      "model": "chosenAnswer",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": []
+}
