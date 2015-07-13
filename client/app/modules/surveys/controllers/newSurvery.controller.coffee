@@ -8,11 +8,12 @@ module = angular.module 'fs.module.surveys'
   * # NewSurveysController
   * Controller of the surveys index
 ###
-module.controller 'NewSurveyController', ($scope, SurveysService) ->
-
-    SurveysService.list()
-    .then (data) ->
-        $scope.surveys = data
+module.controller 'NewSurveyController', ($scope, $location, SurveysService) ->
 
     $scope.save = ->
-        Surveys.Service.create($scope.survey)
+        SurveysService.create($scope.survey)
+        .then ->
+          $location.path( '/surveys' );
+        .catch (res) ->
+          console.log 'error'
+            

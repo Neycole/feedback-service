@@ -15,6 +15,8 @@
 
   app.run(function($location, $rootScope) {
     $rootScope.apiUrl = '/api';
+    $rootScope.accessToken = "8Ojlw4jaMUGJ0nUDdFst2dG7vGiojycsu5uF6bNNu8fbeKB2k1Sb00WF3h4SUMwY";
+    $rootScope.userId = "559e48d16a17bbf9484887c6";
     if (!$rootScope.userId) {
       return $location.path('/login');
     }
@@ -57,8 +59,10 @@
     * Controller of the dashboard index
    */
 
-  module.controller('DashboardController', function($scope, $rootScope) {
-    return $scope.surveys = [];
+  module.controller('DashboardController', function($scope, SurveysService) {
+    return SurveysService.list().then(function(data) {
+      return $scope.surveys = data;
+    });
   });
 
 }).call(this);
@@ -71,6 +75,42 @@
       templateUrl: 'modules/dashboard/views/index.html',
       controller: 'DashboardController'
     });
+  });
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var module;
+
+  module = angular.module('fs.module.dashboard');
+
+  module.service('DashboardService', function($rootScope, $resource) {
+    var resource, service;
+    resource = $resource('http://46.101.190.61:3001/api/users/:uid/surveys/:id', {
+      uid: $rootScope.userId,
+      id: '@id',
+      access_token: $rootScope.accessToken
+    }, {
+      create: {
+        method: 'POST'
+      },
+      update: {
+        method: 'PUT'
+      }
+    });
+    return service = {
+      list: function() {
+        return resource.query().$promise;
+      },
+      get: function(id, options) {
+        if (options == null) {
+          options = {};
+        }
+        options.id = id;
+        return resource.get(options).$promise;
+      }
+    };
   });
 
 }).call(this);
@@ -163,7 +203,7 @@
     * Controller of the editsurvey index
    */
 
-  module.controller('EditSurveyController', function($scope, $state, SurveysService) {
+  module.controller('EditSurveyController', function($scope, $state, SurveysService, QuestionService, AnswersService) {
     var options;
     options = {
       filter: {
@@ -173,11 +213,29 @@
       }
     };
     SurveysService.get($state.params.id, options).then(function(data) {
-      $scope.survey = data;
-      return console.log(data);
+      return $scope.survey = data;
     });
+    $scope.addQuestion = function() {
+      return $scope.survey.questions[$scope.survey.questions.length] = {
+        answers: [],
+        multiple: false,
+        order: 0,
+        text: "",
+        type: "choice"
+      };
+    };
+    $scope.addAnswer = function(index) {
+      return $scope.survey.questions[index].answers[$scope.survey.questions[index].answers.length] = {
+        order: 0,
+        text: ""
+      };
+    };
     return $scope.save = function() {
-      return Surveys.Service.update($scope.survey);
+      SurveysService.update($scope.survey);
+      return $scope.survey.questions.forEach(function(question) {
+        QuestionService.update(question);
+        return question.answers.forEach(function(answer) {});
+      });
     };
   });
 
@@ -198,12 +256,13 @@
     * Controller of the surveys index
    */
 
-  module.controller('NewSurveyController', function($scope, SurveysService) {
-    SurveysService.list().then(function(data) {
-      return $scope.surveys = data;
-    });
+  module.controller('NewSurveyController', function($scope, $location, SurveysService) {
     return $scope.save = function() {
-      return Surveys.Service.create($scope.survey);
+      return SurveysService.create($scope.survey).then(function() {
+        return $location.path('/surveys');
+      })["catch"](function(res) {
+        return console.log('error');
+      });
     };
   });
 
@@ -258,8 +317,72 @@
 
   module = angular.module('fs.module.surveys');
 
-  module.service('SurveysService', function($rootScope, $resource) {
+  module.service('AnswersService', function($rootScope, $resource) {
     var resource, service;
+    resource = $resource('http://46.101.190.61:3001/api/surveys/:sid/questions/:id', {
+      id: '@id',
+      sid: '@surveyId',
+      access_token: $rootScope.accessToken
+    }, {
+      create: {
+        method: 'POST'
+      },
+      update: {
+        method: 'PUT'
+      }
+    });
+    return service = {
+      update: function(survey) {
+        return resource.update(survey).$promise;
+      },
+      create: function(survey) {
+        return resource.create(survey).$promise;
+      }
+    };
+  });
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var module;
+
+  module = angular.module('fs.module.surveys');
+
+  module.service('QuestionService', function($rootScope, $resource) {
+    var resource, service;
+    resource = $resource('http://46.101.190.61:3001/api/surveys/:sid/questions/:id', {
+      id: '@id',
+      sid: '@surveyId',
+      access_token: $rootScope.accessToken
+    }, {
+      create: {
+        method: 'POST'
+      },
+      update: {
+        method: 'PUT'
+      }
+    });
+    return service = {
+      update: function(survey) {
+        return resource.update(survey).$promise;
+      },
+      create: function(survey) {
+        return resource.create(survey).$promise;
+      }
+    };
+  });
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var module;
+
+  module = angular.module('fs.module.surveys');
+
+  module.service('SurveysService', function($rootScope, $resource) {
+    var detailedResource, resource, service;
     resource = $resource('http://46.101.190.61:3001/api/users/:uid/surveys/:id', {
       uid: $rootScope.userId,
       id: '@id',
@@ -272,6 +395,11 @@
         method: 'PUT'
       }
     });
+    detailedResource = $resource('http://46.101.190.61:3001/api/surveys/:id', {
+      uid: $rootScope.userId,
+      id: '@id',
+      access_token: $rootScope.accessToken
+    });
     return service = {
       list: function() {
         return resource.query().$promise;
@@ -281,7 +409,9 @@
           options = {};
         }
         options.id = id;
-        return resource.get(options).$promise;
+        return resource.get(options).$promise.then(function(data) {
+          return detailedResource.get(options).$promise;
+        });
       },
       update: function(survey) {
         return resource.update(survey).$promise;

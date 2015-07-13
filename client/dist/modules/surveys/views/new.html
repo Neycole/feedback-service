@@ -7,7 +7,17 @@
 <div class="row" >
 
     <div class="small-12  column" >
-
+        <label>Name:
+            <input type="text" ng-model="survey.name" />
+        </label>
+        <label>Expires:
+            <input type="checkbox" ng-model="survey.expires" />
+        </label>
+        <label ng-show="survey.expires" >Expires at:
+            <input type="datetime" ng-model="survey.expiresAt" />
+        </label>
+        
+        <button class="button" ng-click="save()">save</button>
     </div >
 
 </div >

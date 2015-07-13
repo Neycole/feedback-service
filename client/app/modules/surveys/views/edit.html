@@ -11,15 +11,49 @@
             <input type="text" ng-model="survey.name" />
         </label>
         <label>Expires:
-            <input type="checkbox" ng-checked="survey.expires" />
+            <input type="checkbox" ng-model="survey.expires" />
         </label>
-        
+        <label ng-show="survey.expires" >Expires at:
+            <input type="datetime" ng-model="survey.expiresAt" />
+        </label>
+        <div>Questions: <button class="button info" ng-click="addQuestion()">add</button></div>
         <ul>
-            <li ng-repeat="question in survey.questions track by $index">
-                
+            <li ng-repeat="question in survey.questions track by $index" class="panel radius">
+                <label>Question text:
+                    <input type="text" ng-model="question.text" />
+                </label>
+                <label>Question type:
+                    <select ng-model="question.type" >
+                        <option value="choice">choice</option>
+                        <option value="text">text</option>
+                    </select>
+                </label>
+                <label ng-show="question.type == 'choice'">Multiple:
+                    <input type="checkbox" ng-model="question.multiple"/>
+                </label>
+                <label>Order:
+                    <input type="text" ng-model="question.order" />
+                </label>
+                <div>Answers: <button class="button info" ng-click="addAnswer($index)">add</button></div>
+                <ul>
+                    <li ng-repeat="answer in question.answers track by $index">
+                        <div class="row collapse">
+                            <div class="small-10 column">
+                                <label>
+                                    <input type="text" ng-model="answer.text" />
+                                </label>
+                            </div>
+                            <div class="small-2 column">
+                                <label>
+                                    <input type="text" ng-model="answer.order" />
+                                </label>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </li>
         </ul>
-        <button class="button" ng-click="save()" ng-hide="true">save</button>
+        <button class="button" ng-click="save()">save</button>
     </div >
 
 </div >

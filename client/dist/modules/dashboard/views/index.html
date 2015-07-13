@@ -23,10 +23,15 @@
 
             <div class="row" >
                 <div class="small-6 column" >
-                    <a href="#" >12 Umfragen</a >
+                    <a href="#/surveys" >
+                        <ng-pluralize count="surveys.length"
+                                      when="{'0': 'keine Umfragen angelegt',
+                                      'one': 'eine Umfrage',
+                                      'other': '{} Umfragen'}">
+                        </ng-pluralize></a >
                 </div >
                 <div class="small-6 column" >
-                    <a href="#" >247 Antworten</a >
+                    <a href="#" >247 Teilnahmen</a >
                 </div >
             </div >
         </div >
