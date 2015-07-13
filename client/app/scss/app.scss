@@ -20,3 +20,12 @@ main {
 table {
     width: 100%;
 }
+
+ul {
+    margin-left: 0;
+    list-style: none;
+    
+    ul {
+        margin-left: 0;
+    }
+}

@@ -9463,3 +9463,13 @@ main {
 table {
   width: 100%;
 }
+
+/* line 24, ../../app/scss/app.scss */
+ul {
+  margin-left: 0;
+  list-style: none;
+}
+/* line 28, ../../app/scss/app.scss */
+ul ul {
+  margin-left: 0;
+}

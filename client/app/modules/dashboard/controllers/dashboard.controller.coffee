@@ -8,6 +8,8 @@ module = angular.module 'fs.module.dashboard'
   * # DashboardController
   * Controller of the dashboard index
 ###
-module.controller 'DashboardController', ($scope, $rootScope) ->
+module.controller 'DashboardController', ($scope, SurveysService) ->
 
-  $scope.surveys = []
+    SurveysService.list()
+        .then (data) ->
+            $scope.surveys = data
