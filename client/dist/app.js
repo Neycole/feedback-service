@@ -215,20 +215,29 @@
     SurveysService.get($state.params.id, options).then(function(data) {
       return $scope.survey = data;
     });
+    $scope.newAnswer = {};
+    $scope.newQuestion = {};
+    $scope.questionTypes = ['choice', 'text'];
     $scope.addQuestion = function() {
-      return $scope.survey.questions[$scope.survey.questions.length] = {
+      $scope.survey.questions.push({
         answers: [],
-        multiple: false,
-        order: 0,
-        text: "",
-        type: "choice"
-      };
+        multiple: $scope.newQuestion.multiple,
+        order: $scope.newQuestion.order,
+        text: $scope.newQuestion.text,
+        type: $scope.newQuestion.type
+      });
+      $scope.newQuestion.multiple = "";
+      $scope.newQuestion.order = 0;
+      $scope.newQuestion.text = "";
+      return $scope.newQuestion.type = "";
     };
-    $scope.addAnswer = function(index) {
-      return $scope.survey.questions[index].answers[$scope.survey.questions[index].answers.length] = {
-        order: 0,
-        text: ""
+    $scope.addAnswer = function(question) {
+      question.answers[question.answers.length] = {
+        order: $scope.newAnswer.order,
+        text: $scope.newAnswer.text
       };
+      $scope.newAnswer.order = "";
+      return $scope.newAnswer.text = "";
     };
     return $scope.save = function() {
       SurveysService.update($scope.survey);

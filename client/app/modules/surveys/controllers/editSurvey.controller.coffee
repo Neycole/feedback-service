@@ -18,20 +18,35 @@ module.controller 'EditSurveyController', ($scope, $state, SurveysService, Quest
   SurveysService.get($state.params.id, options)
     .then (data) ->
         $scope.survey = data
-        
+
+  $scope.newAnswer = {}
+  $scope.newQuestion = {}
+
+  $scope.questionTypes = [
+      'choice'
+      'text'
+  ]
 
   $scope.addQuestion = ->
-    $scope.survey.questions[$scope.survey.questions.length] =
+    $scope.survey.questions.push
         answers: []
-        multiple: false
-        order: 0
-        text: ""
-        type: "choice"
+        multiple: $scope.newQuestion.multiple
+        order: $scope.newQuestion.order
+        text: $scope.newQuestion.text
+        type: $scope.newQuestion.type
 
-  $scope.addAnswer = (index) ->
-    $scope.survey.questions[index].answers[$scope.survey.questions[index].answers.length] =
-        order: 0
-        text: ""
+    $scope.newQuestion.multiple = ""
+    $scope.newQuestion.order = 0
+    $scope.newQuestion.text = ""
+    $scope.newQuestion.type = ""
+
+  $scope.addAnswer = (question) ->
+    question.answers[question.answers.length] =
+        order: $scope.newAnswer.order
+        text: $scope.newAnswer.text
+
+    $scope.newAnswer.order = ""
+    $scope.newAnswer.text = ""
 
   $scope.save = ->
     SurveysService.update($scope.survey)
