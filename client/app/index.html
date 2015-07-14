@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Feedback Service</title>
+    <link rel="stylesheet" href="css/app.css"/>
+</head>
+<body ng-app="FeedbackServiceApp">
+
+    <aside >
+        <nav>
+            <ul class="side-nav" role="navigation" >
+                <li role="menuitem" ><a href="#/dashboard" >Dashboard</a ></li >
+                <li role="menuitem" ><a href="#/surveys" >Surveys</a ></li >
+                <li role="menuitem" ><a href="#/surveys/new" >New Survey</a ></li >
+                <li role="menuitem" ><a href="#/profile" >Profile</a ></li >
+                <li role="menuitem" ><a href="#/logout" >Logout</a ></li >
+                <li role="menuitem" ><a href="#/users" >Users</a ></li >
+            </ul >
+        </nav >
+    </aside >
+
+    <main>
+        <div class="content-main container" ui-view></div>
+    </main>
+
+    <footer>
+        <!-- build:js vendor.min.js -->
+        <!-- bower:js -->
+        <!-- endbower -->
+        <!-- endbuild -->
+
+        <script src="app.js"></script>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "client",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Gloeckchen/feedback-service",
+  "description": "Client for the feedback-service",
+  "main": "index.html",
+  "keywords": [
+    "AngularJS"
+  ],
+  "authors": [
+    "Marcel Kempf",
+    "Nicole Roß",
+    "Holger Terhoeven"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-compass": "^1.0.3",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-usemin": "^3.0.0",
+    "grunt-wiredep": "^2.0.0",
+    "load-grunt-tasks": "^3.2.0"
+  }
+}

@@ -1,0 +1,101 @@
+<div class="row" >
+    <div class="small-12 column" >
+        <h1 >Umfrage bearbeiten</h1 >
+    </div >
+</div >
+
+<div class="row" >
+
+    <div class="small-12  column" >
+        <label>Name:
+            <input type="text" ng-model="survey.name" />
+        </label>
+        <label>Expires:
+            <input type="checkbox" ng-model="survey.expires" />
+        </label>
+        <label ng-show="survey.expires" >Expires at:
+            <input type="datetime" ng-model="survey.expiresAt" />
+        </label>
+        <h3>Questions:</h3>
+        <ul>
+            <li ng-repeat="question in survey.questions track by $index" class="panel radius">
+                <label>Question text:
+                    <input type="text" ng-model="question.text" />
+                </label>
+                <label>Question type:
+                    <select ng-options="type as type for type in questionTypes" ng-model="question.type" ></select>
+                </label>
+                <label ng-show="question.type == 'choice'">Multiple:
+                    <input type="checkbox" ng-model="question.multiple"/>
+                </label>
+                <label>Order:
+                    <input type="text" ng-model="question.order" />
+                </label>
+                
+                <h3>Answers:</h3>
+                
+                <ul>
+                    
+                    <li ng-repeat="answer in question.answers track by $index">
+                        <div class="row collapse">
+                            <div class="small-10 column">
+                                <label>
+                                    <input type="text" ng-model="answer.text" placeholder="Text" />
+                                </label>
+                            </div>
+                            <div class="small-2 column">
+                                <label>
+                                    <input type="text" ng-model="answer.order" />
+                                </label>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li>
+                        <h3>add Answer</h3>
+                        <div class="row collapse">
+                            <div class="small-10 column">
+                                <label>
+                                    <input type="text" ng-model="newAnswer.text" placeholder="Text" />
+                                </label>
+                            </div>
+                            <div class="small-2 column">
+                                <label>
+                                    <input type="text" ng-model="newAnswer.order" placeholder="order" />
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button class="button info" ng-click="addAnswer(question)">add</button>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="panel radius">
+                
+                <h3>add Question</h3>
+                <label>Question text:
+                    <input type="text" ng-model="newQuestion.text" />
+                </label>
+                <label>Question type:
+                    <select ng-options="type as type for type in questionTypes" ng-init="questionTypes[0]" ng-model="newQuestion.type" ></select>
+                </label>
+                <label ng-show="newQuestion.type == 'choice'">Multiple:
+                    <input type="checkbox" ng-model="newQuestion.multiple"/>
+                </label>
+                <label>Order:
+                    <input type="text" ng-model="newQuestion.order" />
+                </label>
+                
+                <button class="button info" ng-click="addQuestion()">add</button>
+                
+            </li>
+            
+        </ul>
+        
+        <button class="button" ng-click="save()">save</button>
+    </div >
+
+</div >
