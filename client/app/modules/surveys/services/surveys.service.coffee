@@ -8,6 +8,8 @@ module.service 'SurveysService', ($rootScope, $resource) ->
             method: 'POST'
         update:
             method: 'PUT'
+        delete: 
+            method: 'DELETE'
     detailedResource = $resource 'http://46.101.190.61:3001/api/surveys/:id',
       {uid: $rootScope.userId, id: '@id', access_token: $rootScope.accessToken}
 
@@ -23,3 +25,5 @@ module.service 'SurveysService', ($rootScope, $resource) ->
             resource.update(survey).$promise
         create: (survey) ->
             resource.create(survey).$promise
+        delete: (survey) ->
+            resource.delete(survey).$promise

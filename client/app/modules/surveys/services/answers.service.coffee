@@ -2,15 +2,18 @@
 module = angular.module 'fs.module.surveys'
 
 module.service 'AnswersService', ($rootScope, $resource) ->
-    resource = $resource 'http://46.101.190.61:3001/api/surveys/:sid/questions/:id',
-      {id: '@id', sid: '@surveyId', access_token: $rootScope.accessToken},
+    resource = $resource 'http://46.101.190.61:3001/api/questions/:questionId/answers/:id',
+      {questionId: '@questionId', id: '@id', access_token: $rootScope.accessToken},
         create:
             method: 'POST'
         update:
             method: 'PUT'
-
+        delete:
+            method: 'DELETE'
     service =
-        update: (survey) ->
-            resource.update(survey).$promise
-        create: (survey) ->
-            resource.create(survey).$promise
+        update: (answer) ->
+            resource.update(answer).$promise
+        create: (answer) ->
+            resource.create(answer).$promise
+        delete: (answer) ->
+            resource.delete(answer).$promise

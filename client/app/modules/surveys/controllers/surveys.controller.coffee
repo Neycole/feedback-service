@@ -10,6 +10,19 @@ module = angular.module 'fs.module.surveys'
 ###
 module.controller 'SurveysController', ($scope, SurveysService) ->
 
-    SurveysService.list()
-    .then (data) ->
-        $scope.surveys = data
+    options = 
+        filter: 
+            include:
+                questions: 'answers'
+
+    $scope.list = ->
+      SurveysService.list()
+          .then (data) ->
+            $scope.surveys = data
+
+    $scope.deleteSurvey = (survey) ->
+      SurveysService.delete survey
+          .then (data) ->
+            $scope.list()
+
+    $scope.list()

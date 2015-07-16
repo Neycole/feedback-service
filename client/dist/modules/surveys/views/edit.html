@@ -1,6 +1,6 @@
 <div class="row" >
     <div class="small-12 column" >
-        <h1 >edit survey</h1 >
+        <h1 >Umfrage bearbeiten</h1 >
     </div >
 </div >
 
@@ -19,11 +19,6 @@
         <h3>Questions:</h3>
         <ul>
             <li ng-repeat="question in survey.questions track by $index" class="panel radius">
-                <div class="row collapse">
-                    <div class="small-4 medium-2 column right">
-                        <button class="button alert postfix" ng-click="deleteQuestion(question)">delete</button>
-                    </div>
-                </div>
                 <label>Question text:
                     <input type="text" ng-model="question.text" />
                 </label>
@@ -34,7 +29,7 @@
                     <input type="checkbox" ng-model="question.multiple"/>
                 </label>
                 <label>Order:
-                    <input type="number" min="0" ng-model="question.order" />
+                    <input type="text" ng-model="question.order" />
                 </label>
                 
                 <h3>Answers:</h3>
@@ -43,18 +38,15 @@
                     
                     <li ng-repeat="answer in question.answers track by $index">
                         <div class="row collapse">
-                            <div class="small-6 medium-8 column">
+                            <div class="small-10 column">
                                 <label>
                                     <input type="text" ng-model="answer.text" placeholder="Text" />
                                 </label>
                             </div>
-                            <div class="small-2 medium-2 column">
+                            <div class="small-2 column">
                                 <label>
-                                    <input type="number" min="0" ng-model="answer.order" />
+                                    <input type="text" ng-model="answer.order" />
                                 </label>
-                            </div>
-                            <div class="small-4 medium-2 column">
-                                <button class="button alert postfix" ng-click="deleteAnswer(answer)">delete</button>
                             </div>
                         </div>
                     </li>
@@ -62,21 +54,19 @@
                     <li>
                         <h3>add Answer</h3>
                         <div class="row collapse">
-                            <div class="small-6 medium-8 column">
+                            <div class="small-10 column">
                                 <label>
                                     <input type="text" ng-model="newAnswer.text" placeholder="Text" />
                                 </label>
                             </div>
-                            <div class="small-2 medium-2 column">
+                            <div class="small-2 column">
                                 <label>
-                                    <input type="number" min="0" ng-model="newAnswer.order" placeholder="order" />
+                                    <input type="text" ng-model="newAnswer.order" placeholder="order" />
                                 </label>
-                            </div>
-                            <div class="small-4 medium-2 column">
-                                <button class="button info postfix" ng-click="addAnswer(question)">add</button>
                             </div>
                         </div>
                         
+                        <button class="button info" ng-click="addAnswer(question)">add</button>
                     </li>
                     
                 </ul>
@@ -96,7 +86,7 @@
                     <input type="checkbox" ng-model="newQuestion.multiple"/>
                 </label>
                 <label>Order:
-                    <input type="number" min="0" ng-model="newQuestion.order" />
+                    <input type="text" ng-model="newQuestion.order" />
                 </label>
                 
                 <button class="button info" ng-click="addQuestion()">add</button>
@@ -106,8 +96,6 @@
         </ul>
         
         <button class="button" ng-click="save()">save</button>
-        <button class="button alert" ng-click="deleteSurvey(survey)">delete</button>
-        
     </div >
 
 </div >

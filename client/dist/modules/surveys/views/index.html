@@ -13,7 +13,6 @@
                 <th>Author</th>
                 <th>Created</th>
                 <th>Expires</th>
-                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -22,7 +21,6 @@
                 <td><span class="author"> {{ survey.user }}</span></td>
                 <td><span class="created">{{ survey.createdAt }}</span></td>
                 <td><span class="expires">{{ survey.expires ? survey.expiresAt : 'never' }}</span></td>
-                <td><button class="button alert postfix" ng-click="deleteSurvey(survey)">delete</button></td>
             </tr>
             </tbody>
         </table>
